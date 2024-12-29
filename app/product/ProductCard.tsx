@@ -22,10 +22,15 @@ const ProductCard = ({ product }: ProductProps) => {
           objectFit="contain"
         />
       </div>
-
       <h2 className="text-sm font-bold text-gray-800 mb-2 truncate">
         {product.title}
       </h2>
+      <div className="flex items-center justify-between">
+        <span className="text-lg font-bold text-indigo-600">
+          {product.price}
+        </span>
+        <button>Add to chart</button>
+      </div>
     </div>
   );
 };

@@ -10,8 +10,12 @@ interface ProductsProps {
 const ProductPage = async () => {
   const res = await fetch("https://fakestoreapi.com/products?limit=2");
   const products: ProductsProps[] = await res.json();
-  console.log(products);
-  return <div>{products.map((products) => products.title)} </div>;
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">Our products</h1>
+      {products.map((products) => products.title)}{" "}
+    </div>
+  );
 };
 
 export default ProductPage;

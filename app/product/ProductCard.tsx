@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface Product {
@@ -12,8 +13,19 @@ interface ProductProps {
 
 const ProductCard = ({ product }: ProductProps) => {
   return (
-    <div>
-      <h1>{product.title}</h1>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg">
+      <div className="relative h-48 w-full">
+        <Image
+          src={product.image}
+          alt={product.title}
+          layout="fill"
+          objectFit="contain"
+        />
+      </div>
+
+      <h2 className="text-sm font-bold text-gray-800 mb-2 truncate">
+        {product.title}
+      </h2>
     </div>
   );
 };

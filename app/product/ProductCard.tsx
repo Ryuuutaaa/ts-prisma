@@ -29,7 +29,9 @@ const ProductCard = ({ product }: ProductProps) => {
         <span className="text-lg font-bold text-indigo-600">
           {product.price}
         </span>
-        <button>Add to chart</button>
+        <button className="bg-indigo-600 text-white text-xs px-2 py-1 rounded-full hover:bg-indigo-700 transition-colors duration-300">
+          Add to chart
+        </button>
       </div>
     </div>
   );

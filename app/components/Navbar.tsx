@@ -28,6 +28,7 @@ const Navbar = () => {
           >
             <Link href="/about">About</Link>
           </div>
+
           <div
             className={
               pathName === "/product"

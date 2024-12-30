@@ -1,8 +1,8 @@
-import FormRegister from "@/app/components/FormRegister";
 import React from "react";
+import FormRegister from "../components/FormRegister";
 
-const RegisterPage = () => {
+const page = () => {
   return <FormRegister />;
 };
 
-export default RegisterPage;
+export default page;

@@ -15,7 +15,7 @@ const FormLogin = () => {
   };
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-3xl">Register</h1>
+      <h1 className="text-3xl">Login</h1>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 border p-2 mx-auto mt-8"
@@ -26,7 +26,7 @@ const FormLogin = () => {
         <label htmlFor="password">Password</label>
         <input type="password" name="password" className="border" />
 
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );

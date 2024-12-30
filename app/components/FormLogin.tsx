@@ -1,11 +1,8 @@
 "use client";
 
-import { useRouter } from "next/router";
 import React from "react";
 
-const FormRegister = () => {
-  const router = useRouter();
-
+const FormLogin = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -15,10 +12,7 @@ const FormRegister = () => {
 
     console.log("Email", email);
     console.log("Password", password);
-
-    await router.push("/login");
   };
-
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-3xl">Register</h1>
@@ -38,4 +32,4 @@ const FormRegister = () => {
   );
 };
 
-export default FormRegister;
+export default FormLogin;

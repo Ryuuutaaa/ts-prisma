@@ -10,7 +10,7 @@ interface ProductsProps {
 }
 
 const ProductPage = async () => {
-  const res = await fetch("https://fakestoreapi.com/products?limit=5", {
+  const res = await fetch("http://localhost:3000/api/products", {
     cache: "no-store",
   });
   const products: ProductsProps[] = await res.json();

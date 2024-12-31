@@ -9,7 +9,7 @@ export async function PUT(
   const { id, title, description, price, category, image } = body;
 
   const productIndex = products.findIndex(
-    (products) => products.id == parseInt(params.id)
+    (product) => product.id == parseInt(params.id)
   );
 
   products[productIndex] = {

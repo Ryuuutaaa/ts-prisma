@@ -1,6 +1,8 @@
+import { products } from "@/app/data/productData";
+
 // GET  : to get the data
 export async function GET() {
-  return Response.json({ id: 1, name: "laptop" });
+  return Response.json(products);
 }
 
 // POST : to create the data

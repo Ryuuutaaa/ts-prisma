@@ -11,7 +11,6 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    await prisma.product.create;
 
     if (
       !body.title ||
@@ -29,14 +28,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const newProduct = {
-      id: products.length + 1,
-      title: body.title,
-      description: body.description,
-      price: body.price,
-      category: body.category,
-      image: body.image,
-    };
+    const newProduct = await prisma.product.create({
+      data: {
+        title: body.title,
+        price: body.price,
+        description: body.description,
+        category: body.category,
+        image: body.image,
+      },
+    });
 
     products.push(newProduct);
 

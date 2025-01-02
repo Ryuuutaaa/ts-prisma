@@ -19,6 +19,6 @@ model Product{
   title String
   price Float
   description String?
-  img String
+  image String
   category String
 }

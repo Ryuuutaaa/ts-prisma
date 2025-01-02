@@ -9,7 +9,7 @@ export async function PUT(
   try {
     const body = await req.json();
 
-    const productId = parseInt(params.id);
+     const productId = parseInt(params.id);
     if (isNaN(productId)) {
       return Response.json({ error: "Invalid product ID" }, { status: 400 });
     }

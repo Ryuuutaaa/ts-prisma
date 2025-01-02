@@ -1,19 +1,18 @@
-import { products } from "@/app/data/productData";
+// import { products } from "@/app/data/productData";
 import { prisma } from "@/prisma/db_client";
 import { NextRequest } from "next/server";
 
 // GET  : to get the data
 export async function GET() {
-  return Response.json(products);
+  const product = await prisma.product.findMany();
+  return Response.json(product);
 }
 
 // POST : to create the data
 export async function POST(req: NextRequest) {
   try {
-    // Parsing JSON dari body request
     const body = await req.json();
 
-    // Validasi input untuk memastikan semua field yang dibutuhkan ada
     if (
       !body.title ||
       !body.description ||
@@ -30,7 +29,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Membuat produk baru di database menggunakan Prisma
     const newProduct = await prisma.product.create({
       data: {
         title: body.title,
@@ -41,7 +39,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Mengembalikan response JSON dengan data produk baru
     return Response.json(newProduct, { status: 201 });
   } catch (error) {
     console.error("Error creating product:", error);

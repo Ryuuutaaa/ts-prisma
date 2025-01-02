@@ -18,4 +18,5 @@ model Produc{
   id Int @id
   price Float
   description String
+  img String
 }

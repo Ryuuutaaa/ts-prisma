@@ -1,4 +1,5 @@
 import { products } from "@/app/data/productData";
+import { prisma } from "@/prisma/db_client";
 import { NextRequest } from "next/server";
 
 export async function PUT(
@@ -7,41 +8,45 @@ export async function PUT(
 ) {
   try {
     const body = await req.json();
-    const productIndex = products.findIndex(
-      (product) => product.id === parseInt(params.id)
-    );
 
-    if (productIndex === -1) {
-      return new Response(JSON.stringify({ error: "Product not found" }), {
-        status: 404,
-        headers: { "Content-Type": "application/json" },
-      });
+    // Validasi ID produk yang valid
+    const productId = parseInt(params.id);
+    if (isNaN(productId)) {
+      return Response.json({ error: "Invalid product ID" }, { status: 400 });
     }
 
-    const updatedProduct = {
-      id: parseInt(params.id),
-      title: body.title || products[productIndex].title,
-      description: body.description || products[productIndex].description,
-      price: body.price || products[productIndex].price,
-      category: body.category || products[productIndex].category,
-      image: body.image || products[productIndex].image,
-    };
-
-    products[productIndex] = updatedProduct;
-
-    return new Response(JSON.stringify(updatedProduct), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
+    // Periksa apakah produk ada di database
+    const existingProduct = await prisma.product.findUnique({
+      where: { id: productId },
     });
-  } catch {
-    // Respons error saat body tidak valid
-    return new Response(JSON.stringify({ error: "Invalid request body" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
+
+    if (!existingProduct) {
+      return Response.json({ error: "Product not found" }, { status: 404 });
+    }
+
+    // Update produk menggunakan Prisma
+    const updatedProduct = await prisma.product.update({
+      where: { id: productId },
+      data: {
+        title: body.title || existingProduct.title,
+        description: body.description || existingProduct.description,
+        price: body.price || existingProduct.price,
+        category: body.category || existingProduct.category,
+        image: body.image || existingProduct.image,
+      },
     });
+
+    // Mengembalikan produk yang diperbarui
+    return Response.json(updatedProduct, { status: 200 });
+  } catch (error) {
+    console.error("Error updating product:", error);
+
+    return Response.json(
+      { error: "An unexpected error occurred" },
+      { status: 500 }
+    );
   }
 }
-
 export async function DELETE(
   req: NextRequest,
   context: { params: { id: string } }

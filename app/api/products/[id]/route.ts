@@ -9,13 +9,11 @@ export async function PUT(
   try {
     const body = await req.json();
 
-    // Validasi ID produk yang valid
     const productId = parseInt(params.id);
     if (isNaN(productId)) {
       return Response.json({ error: "Invalid product ID" }, { status: 400 });
     }
 
-    // Periksa apakah produk ada di database
     const existingProduct = await prisma.product.findUnique({
       where: { id: productId },
     });
@@ -24,7 +22,6 @@ export async function PUT(
       return Response.json({ error: "Product not found" }, { status: 404 });
     }
 
-    // Update produk menggunakan Prisma
     const updatedProduct = await prisma.product.update({
       where: { id: productId },
       data: {
@@ -36,7 +33,6 @@ export async function PUT(
       },
     });
 
-    // Mengembalikan produk yang diperbarui
     return Response.json(updatedProduct, { status: 200 });
   } catch (error) {
     console.error("Error updating product:", error);

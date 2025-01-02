@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
+    // Validasi input
     if (
       !body.title ||
       !body.description ||
@@ -39,10 +40,17 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    // Validasi apakah produk berhasil dibuat
+    if (!newProduct) {
+      return Response.json(
+        { error: "Failed to create product." },
+        { status: 500 }
+      );
+    }
+
     return Response.json(newProduct, { status: 201 });
   } catch (error) {
     console.error("Error creating product:", error);
-
     return Response.json(
       { error: "An unexpected error occurred while creating the product." },
       { status: 500 }

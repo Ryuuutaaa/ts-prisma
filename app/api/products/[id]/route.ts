@@ -1,4 +1,4 @@
-import { products } from "@/app/data/productData";
+// import { products } from "@/app/data/productData";
 import { prisma } from "@/prisma/db_client";
 import { NextRequest } from "next/server";
 
@@ -49,33 +49,15 @@ export async function PUT(
 }
 export async function DELETE(
   req: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = await context.params;
+  const product = await prisma.product.findUnique({
+    where: { id: parseInt(params.id) },
+  });
 
-  const productIndex = products.findIndex(
-    (product) => product.id === parseInt(id)
-  );
+  await prisma.product.delete({
+    where: { id: product?.id },
+  });
 
-  if (productIndex === -1) {
-    return new Response(JSON.stringify({ error: "Product not found" }), {
-      status: 404,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
-
-  // Menghapus produk dari array dan mengambil produk yang dihapus
-  const deletedProduct = products.splice(productIndex, 1)[0];
-
-  // Mengembalikan respons dengan produk yang terhapus
-  return new Response(
-    JSON.stringify({
-      message: "Delete successfully",
-      deletedProduct,
-    }),
-    {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    }
-  );
+  return Response.json("Delete successfully", { status: 200 });
 }

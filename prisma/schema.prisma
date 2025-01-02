@@ -15,7 +15,7 @@ datasource db {
 
 
 model Produc{
-  id Int @id
+  id Int @id @default(autoincrement())
   price Float
   description String
   img String

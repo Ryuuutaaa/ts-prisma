@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `produc` MODIFY `id` INTEGER NOT NULL AUTO_INCREMENT;

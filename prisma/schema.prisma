@@ -14,7 +14,7 @@ datasource db {
 }
 
 
-model Produc{
+model Product{
   id Int @id @default(autoincrement())
   price Float
   description String

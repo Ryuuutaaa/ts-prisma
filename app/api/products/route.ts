@@ -10,8 +10,10 @@ export async function GET() {
 // POST : to create the data
 export async function POST(req: NextRequest) {
   try {
+    // Parsing JSON dari body request
     const body = await req.json();
 
+    // Validasi input untuk memastikan semua field yang dibutuhkan ada
     if (
       !body.title ||
       !body.description ||
@@ -19,38 +21,34 @@ export async function POST(req: NextRequest) {
       !body.category ||
       !body.image
     ) {
-      return new Response(
-        JSON.stringify({ error: "All fields are required" }),
+      return Response.json(
         {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
+          error:
+            "All fields (title, description, price, category, image) are required.",
+        },
+        { status: 400 }
       );
     }
 
+    // Membuat produk baru di database menggunakan Prisma
     const newProduct = await prisma.product.create({
       data: {
         title: body.title,
-        price: body.price,
         description: body.description,
+        price: body.price,
         category: body.category,
         image: body.image,
       },
     });
 
-    products.push(newProduct);
+    // Mengembalikan response JSON dengan data produk baru
+    return Response.json(newProduct, { status: 201 });
+  } catch (error) {
+    console.error("Error creating product:", error);
 
-    return new Response(JSON.stringify(newProduct), {
-      status: 201,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch {
-    return new Response(
-      JSON.stringify({ error: "Invalid JSON body or request format" }),
-      {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      }
+    return Response.json(
+      { error: "An unexpected error occurred while creating the product." },
+      { status: 500 }
     );
   }
 }

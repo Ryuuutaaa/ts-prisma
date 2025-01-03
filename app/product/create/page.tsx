@@ -80,6 +80,8 @@ const CreateProductPage = () => {
           <input
             type="number"
             name="price"
+            value={formData.price}
+            onChange={handleInputChange}
             step="0.01"
             required
             className="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm"
@@ -92,6 +94,8 @@ const CreateProductPage = () => {
           <input
             type="text"
             name="description"
+            value={formData.description}
+            onChange={handleInputChange}
             className="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm"
           />
         </div>
@@ -102,6 +106,8 @@ const CreateProductPage = () => {
           <input
             type="url"
             name="image"
+            value={formData.image}
+            onChange={handleInputChange}
             required
             className="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm"
           />
@@ -113,15 +119,18 @@ const CreateProductPage = () => {
           <input
             type="text"
             name="category"
+            value={formData.category}
+            onChange={handleInputChange}
             required
             className="mt-1 w-full p-2 border border-gray-300 rounded-md shadow-sm"
           />
         </div>
         <button
           type="submit"
+          disabled={loading}
           className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
         >
-          Crate Product
+          {loading ? "Creating..." : "Create product"}
         </button>
       </form>
     </div>
